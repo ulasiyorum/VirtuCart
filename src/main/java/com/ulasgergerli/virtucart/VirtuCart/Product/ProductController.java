@@ -1,5 +1,11 @@
 package com.ulasgergerli.virtucart.VirtuCart.Product;
 
+import com.ulasgergerli.virtucart.VirtuCart.Category.Category;
+import com.ulasgergerli.virtucart.VirtuCart.Category.CategoryService;
+import com.ulasgergerli.virtucart.VirtuCart.Discount.DiscountService;
+import com.ulasgergerli.virtucart.VirtuCart.Dtos.ProductDto;
+import com.ulasgergerli.virtucart.VirtuCart.Factory.ProductFactory;
+import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -7,25 +13,45 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 @Controller("/api/v1/product")
 public class ProductController {
     private final ProductService productService;
+    private final CategoryService categoryService;
+    private final DiscountService discountService;
+
+    private final ProductFactory productFactory = ProductFactory.getInstance();
 
     @Autowired
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService, CategoryService categoryService, DiscountService discountService) {
+        this.categoryService = categoryService;
+        this.discountService = discountService;
         this.productService = productService;
     }
 
     @PostMapping("/add")
-    public Product addProduct(Product product) {
-        return productService
+    public ProductDto addProduct(ProductDto productDto) {
+        List<Category> categories = categoryService.getCategories(productDto.getCategoryIds());
+        Product product = productFactory.createProduct(productDto, categories);
+
+        product = productService
                 .addProduct(product);
+
+        return productFactory.createProductDto(product, discountService.getDiscount(productDto.getDiscountId()));
     }
 
     @PutMapping("/update")
-    public Product updateProduct(Product product) {
-        return productService
+    public ProductDto updateProduct(ProductDto productDto) {
+        List<Category> categories = categoryService.getCategories(productDto.getCategoryIds());
+        Product product = productFactory.createProduct(productDto, categories);
+
+        product = productService
                 .updateProduct(product);
+
+        return productFactory.createProductDto(product, discountService.getDiscount(productDto.getDiscountId()));
     }
 
     @DeleteMapping("/delete")
@@ -35,20 +61,66 @@ public class ProductController {
     }
 
     @GetMapping("/get")
-    public Product getProduct(Long id) {
-        return productService
-                .getProduct(id);
+    public ProductDto getProduct(Long id) {
+        Product product = productService
+                            .getProduct(id);
+
+        List<Long> categoryIds = new ArrayList<>();
+        for(Category category : product.getCategories()) {
+            categoryIds.add(category.getId());
+        }
+
+        product.setCategories(categoryService.getCategories(categoryIds));
+
+        return productFactory.createProductDto(product, null);
+    }
+
+    public ProductDto getProductWithDiscount(Long id, Long discountId) {
+        Product product = productService
+                            .getProduct(id);
+
+        List<Long> categoryIds = new ArrayList<>();
+        for(Category category : product.getCategories()) {
+            categoryIds.add(category.getId());
+        }
+
+        product.setCategories(categoryService.getCategories(categoryIds));
+
+        return productFactory.createProductDto(product, discountService.getDiscount(discountId));
     }
 
     @GetMapping("/getByName")
-    public Product getProductByName(String name) {
-        return productService
-                .getProductByName(name);
+    public ProductDto getProductByName(String name) {
+        Product product = productService
+                            .getProductByName(name);
+
+        List<Long> categoryIds = new ArrayList<>();
+        for(Category category : product.getCategories()) {
+            categoryIds.add(category.getId());
+        }
+
+        product.setCategories(categoryService.getCategories(categoryIds));
+
+        return productFactory.createProductDto(product, null);
     }
 
     @GetMapping("/productKeywordSearch")
-    public Product getProductByNameContaining(String keyword) {
-        return productService
-                .getProductByNameContaining(keyword);
+    public List<ProductDto> getProductByNameContaining(String keyword) {
+        List<Product> products = productService
+                                    .getProductsByNameContaining(keyword);
+
+        List<ProductDto> productDtos = new ArrayList<>();
+        for(Product product : products) {
+            List<Long> categoryIds = new ArrayList<>();
+            for(Category category : product.getCategories()) {
+                categoryIds.add(category.getId());
+            }
+
+            product.setCategories(categoryService.getCategories(categoryIds));
+
+            productDtos.add(productFactory.createProductDto(product, null));
+        }
+
+        return productDtos;
     }
 }

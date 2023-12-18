@@ -25,6 +25,17 @@ public class Product {
     @ManyToMany(mappedBy = "products")
     private List<Category> categories;
 
+    public Product() {
+    }
+
+    public Product(String name, String description, double price, List<String> images, List<Category> categories) {
+        this.name = name;
+        this.description = description;
+        this.images = images;
+        this.price = price;
+        this.categories = categories;
+    }
+
     public long getId() {
         return id;
     }

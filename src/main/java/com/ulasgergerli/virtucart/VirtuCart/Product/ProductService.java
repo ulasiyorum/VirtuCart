@@ -3,6 +3,8 @@ package com.ulasgergerli.virtucart.VirtuCart.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProductService {
 
@@ -38,9 +40,9 @@ public class ProductService {
                 .findByName(name);
     }
 
-    public Product getProductByNameContaining(String keyword) {
+    public List<Product> getProductsByNameContaining(String keyword) {
         return productRepository
-                .findByNameContaining(keyword);
+                .findAllByNameContaining(keyword);
     }
 
 }

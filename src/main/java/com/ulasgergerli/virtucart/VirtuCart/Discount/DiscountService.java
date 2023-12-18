@@ -11,7 +11,9 @@ public class DiscountService {
         this.discountRepository = discountRepository;
     }
 
-    public Discount getDiscount(DiscountType discountType, long id) {
-        return discountRepository.findByDiscountTypeAndId(discountType, id);
+    public Discount getDiscount(long id) {
+        return discountRepository
+                .findById(id)
+                .orElse(null);
     }
 }
