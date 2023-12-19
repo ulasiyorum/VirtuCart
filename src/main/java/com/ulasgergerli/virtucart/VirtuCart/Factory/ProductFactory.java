@@ -7,9 +7,7 @@ import com.ulasgergerli.virtucart.VirtuCart.Discount.PercentageDiscount;
 import com.ulasgergerli.virtucart.VirtuCart.Dtos.ProductDto;
 import com.ulasgergerli.virtucart.VirtuCart.Product.Product;
 import jakarta.annotation.Nullable;
-
 import java.util.List;
-import java.util.Optional;
 
 public class ProductFactory {
 
@@ -30,35 +28,13 @@ public class ProductFactory {
         productDto.getPrice(), productDto.getImages(), categories);
     }
 
-    public ProductDto createProductDto(Product product, @Nullable Discount discount) {
+    public ProductDto createProductDto(Product product) {
         ProductDto productDto = new ProductDto();
         productDto.setId(product.getId());
         productDto.setName(product.getName());
         productDto.setDescription(product.getDescription());
         productDto.setPrice(product.getPrice());
         productDto.setImages(product.getImages());
-
-        if(discount == null) {
-            productDto.setDiscountedPrice(product.getPrice());
-            return productDto;
-        }
-
-        productDto.setDiscountId(discount.getId());
-
-        switch(discount.getDiscountType()) {
-            case PERCENTAGE:
-                PercentageDiscount percentageDiscount = new PercentageDiscount(discount.getDiscountAmount());
-                productDto.setDiscountedPrice(percentageDiscount.applyDiscount(product.getPrice()));
-                break;
-            case FIXED:
-                FixedDiscount fixedDiscount = new FixedDiscount(discount.getDiscountAmount());
-                productDto.setDiscountedPrice(fixedDiscount.applyDiscount(product.getPrice()));
-                break;
-            default:
-                productDto.setDiscountedPrice(product.getPrice());
-                break;
-        }
-
         return productDto;
     }
 }

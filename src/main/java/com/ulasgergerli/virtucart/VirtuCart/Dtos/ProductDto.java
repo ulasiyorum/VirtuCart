@@ -9,9 +9,7 @@ public class ProductDto {
     private String description;
     private List<String> images;
     private double price;
-    private double discountedPrice;
     private List<Long> categoryIds;
-    private long discountId;
 
     public ProductDto() {
     }
@@ -40,24 +38,12 @@ public class ProductDto {
         this.price = price;
     }
 
-    public double getDiscountedPrice() {
-        return discountedPrice;
-    }
-
-    public void setDiscountedPrice(double discountedPrice) {
-        this.discountedPrice = discountedPrice;
-    }
-
     public List<Long> getCategoryIds() {
         return categoryIds;
     }
 
     public void setCategoryIds(List<Long> categoryIds) {
         this.categoryIds = categoryIds;
-    }
-
-    public long getDiscountId() {
-        return discountId;
     }
 
     public List<String> getImages() {
@@ -73,8 +59,5 @@ public class ProductDto {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-    public void setDiscountId(long discountId) {
-        this.discountId = discountId;
     }
 }

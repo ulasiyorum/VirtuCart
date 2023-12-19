@@ -5,7 +5,6 @@ import com.ulasgergerli.virtucart.VirtuCart.Category.CategoryService;
 import com.ulasgergerli.virtucart.VirtuCart.Discount.DiscountService;
 import com.ulasgergerli.virtucart.VirtuCart.Dtos.ProductDto;
 import com.ulasgergerli.virtucart.VirtuCart.Factory.ProductFactory;
-import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,20 +14,18 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Controller("/api/v1/product")
 public class ProductController {
     private final ProductService productService;
     private final CategoryService categoryService;
-    private final DiscountService discountService;
 
     private final ProductFactory productFactory = ProductFactory.getInstance();
 
     @Autowired
-    public ProductController(ProductService productService, CategoryService categoryService, DiscountService discountService) {
+    public ProductController(ProductService productService,
+                             CategoryService categoryService) {
         this.categoryService = categoryService;
-        this.discountService = discountService;
         this.productService = productService;
     }
 
@@ -40,7 +37,7 @@ public class ProductController {
         product = productService
                 .addProduct(product);
 
-        return productFactory.createProductDto(product, discountService.getDiscount(productDto.getDiscountId()));
+        return productFactory.createProductDto(product);
     }
 
     @PutMapping("/update")
@@ -51,7 +48,7 @@ public class ProductController {
         product = productService
                 .updateProduct(product);
 
-        return productFactory.createProductDto(product, discountService.getDiscount(productDto.getDiscountId()));
+        return productFactory.createProductDto(product);
     }
 
     @DeleteMapping("/delete")
@@ -72,21 +69,7 @@ public class ProductController {
 
         product.setCategories(categoryService.getCategories(categoryIds));
 
-        return productFactory.createProductDto(product, null);
-    }
-
-    public ProductDto getProductWithDiscount(Long id, Long discountId) {
-        Product product = productService
-                            .getProduct(id);
-
-        List<Long> categoryIds = new ArrayList<>();
-        for(Category category : product.getCategories()) {
-            categoryIds.add(category.getId());
-        }
-
-        product.setCategories(categoryService.getCategories(categoryIds));
-
-        return productFactory.createProductDto(product, discountService.getDiscount(discountId));
+        return productFactory.createProductDto(product);
     }
 
     @GetMapping("/getByName")
@@ -101,7 +84,7 @@ public class ProductController {
 
         product.setCategories(categoryService.getCategories(categoryIds));
 
-        return productFactory.createProductDto(product, null);
+        return productFactory.createProductDto(product);
     }
 
     @GetMapping("/productKeywordSearch")
@@ -118,7 +101,7 @@ public class ProductController {
 
             product.setCategories(categoryService.getCategories(categoryIds));
 
-            productDtos.add(productFactory.createProductDto(product, null));
+            productDtos.add(productFactory.createProductDto(product));
         }
 
         return productDtos;
