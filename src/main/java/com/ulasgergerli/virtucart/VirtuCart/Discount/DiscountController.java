@@ -15,9 +15,8 @@ public class DiscountController {
         this.discountService = discountService;
     }
 
-    @GetMapping("/{discountType}/{id}")
-    public Discount getDiscount(@PathVariable DiscountType discountType,
-                                @PathVariable long id) {
-        return discountService.getDiscount(discountType, id);
+    @GetMapping("/{id}")
+    public Discount getDiscount(@PathVariable long id) {
+        return discountService.getDiscount(id);
     }
 }
