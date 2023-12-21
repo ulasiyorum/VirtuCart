@@ -54,14 +54,17 @@ public class BasketController {
     public List<BasketItemDto> getBasketItems(Long id) {
         var basketItems = basketService.getBasketItems(id);
 
-        return List.of();
+        return basketFactory.createBasketItemDtos(basketItems);
     }
 
     @GetMapping("/getBaskets")
     public List<BasketDto> getBaskets(Long userId) {
         var baskets = basketService.getBaskets(userId);
 
-        return List.of();
+        return baskets
+                .stream()
+                .map(basketFactory::createBasketDto)
+                .collect(Collectors.toList());
     }
 
 
