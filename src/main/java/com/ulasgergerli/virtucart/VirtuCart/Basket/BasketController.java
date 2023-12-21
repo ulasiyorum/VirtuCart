@@ -3,6 +3,7 @@ package com.ulasgergerli.virtucart.VirtuCart.Basket;
 import com.ulasgergerli.virtucart.VirtuCart.Dtos.BasketDto;
 import com.ulasgergerli.virtucart.VirtuCart.Dtos.BasketItemDto;
 import com.ulasgergerli.virtucart.VirtuCart.Factory.BasketFactory;
+import com.ulasgergerli.virtucart.VirtuCart.Product.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,10 +14,13 @@ import java.util.stream.Collectors;
 @Controller("/api/v1/basket")
 public class BasketController {
     private final BasketService basketService;
+    private final ProductService productService;
     private final BasketFactory basketFactory = BasketFactory.getInstance();
 
-    public BasketController(BasketService basketService) {
+    public BasketController(BasketService basketService,
+                            ProductService productService) {
         this.basketService = basketService;
+        this.productService = productService;
     }
 
     @GetMapping("/get")
@@ -28,7 +32,10 @@ public class BasketController {
 
     @GetMapping("/create")
     public BasketDto createBasket(BasketDto basketDto) {
-        var basket = basketService.createBasket(new Basket());
+        var user = basketService.getUser(basketDto.getUserId());
+
+        var basket = basketFactory.createBasket(user);
+        basket = basketService.createBasket(basket);
 
         return basketFactory.createBasketDto(basket);
     }
@@ -40,7 +47,19 @@ public class BasketController {
 
     @GetMapping("/addItemToBasket")
     public BasketDto addItemToBasket(BasketItemDto basketDto) {
-        var basketItem = basketService.addItemToBasket(new BasketItem());
+        var product = productService.getProduct(basketDto.getProductId());
+
+        if(product == null)
+            throw new RuntimeException("Product not found");
+
+        var basket = basketService.getBasket(basketDto.getId());
+
+        if(basket == null)
+            throw new RuntimeException("Basket not found");
+
+        var basketItem = basketService.addItemToBasket(basketFactory.createBasketItem(basket, product));
+
+        basketItem = basketService.addItemToBasket(basketItem);
 
         return basketFactory.createBasketDto(basketItem.getBasket());
     }

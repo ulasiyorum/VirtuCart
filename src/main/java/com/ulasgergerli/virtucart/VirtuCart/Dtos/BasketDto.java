@@ -3,6 +3,7 @@ package com.ulasgergerli.virtucart.VirtuCart.Dtos;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.Nullable;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @Builder
 public class BasketDto {
 
+    @Nullable
     private Long id;
     private Long userId;
     private List<BasketItemDto> basketItems;

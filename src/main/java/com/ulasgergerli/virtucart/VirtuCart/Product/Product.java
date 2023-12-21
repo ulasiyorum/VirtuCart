@@ -12,7 +12,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String name;
     private String description;
@@ -40,7 +40,7 @@ public class Product {
         this.categories = categories;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

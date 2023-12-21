@@ -1,5 +1,7 @@
 package com.ulasgergerli.virtucart.VirtuCart.Basket;
 
+import com.ulasgergerli.virtucart.VirtuCart.User.User;
+import com.ulasgergerli.virtucart.VirtuCart.User.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,10 +10,14 @@ import java.util.List;
 public class BasketService {
     private final BasketRepository basketRepository;
     private final BasketItemRepository basketItemRepository;
+    private final UserRepository userRepository;
 
-    public BasketService(BasketRepository basketRepository, BasketItemRepository basketItemRepository) {
+    public BasketService(BasketRepository basketRepository,
+                         BasketItemRepository basketItemRepository,
+                         UserRepository userRepository) {
         this.basketRepository = basketRepository;
         this.basketItemRepository = basketItemRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Basket> getBaskets(Long userId) {
@@ -40,5 +46,9 @@ public class BasketService {
 
     public void deleteBasketItem(Long basketItemId) {
         basketItemRepository.deleteById(basketItemId);
+    }
+
+    public User getUser(Long userId) {
+        return userRepository.findById(userId).orElseThrow();
     }
 }
