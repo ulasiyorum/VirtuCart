@@ -24,7 +24,7 @@ public class BasketFactory {
     public BasketDto createBasketDto(Basket basket) {
         return BasketDto.builder()
                 .userId(basket.getUser().getId())
-
+                .basketItems(createBasketItemDtos(basket.getBasketItems()))
                 .build();
     }
 
