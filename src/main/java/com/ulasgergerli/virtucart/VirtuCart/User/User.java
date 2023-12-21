@@ -1,10 +1,9 @@
 package com.ulasgergerli.virtucart.VirtuCart.User;
 
+import com.ulasgergerli.virtucart.VirtuCart.Product.Product;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.lang.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,8 +27,14 @@ public class User implements UserDetails {
     private String email;
     private String password;
 
+    @Nullable
+    private long superUserId;
+
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Product> products = null;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

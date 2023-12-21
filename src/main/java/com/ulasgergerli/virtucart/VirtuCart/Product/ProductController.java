@@ -29,7 +29,7 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @PostMapping("/add")
+    @PostMapping("/admin/add")
     public ProductDto addProduct(ProductDto productDto) {
         List<Category> categories = categoryService.getCategories(productDto.getCategoryIds());
         Product product = productFactory.createProduct(productDto, categories);
@@ -40,7 +40,7 @@ public class ProductController {
         return productFactory.createProductDto(product);
     }
 
-    @PutMapping("/update")
+    @PutMapping("/admin/update")
     public ProductDto updateProduct(ProductDto productDto) {
         List<Category> categories = categoryService.getCategories(productDto.getCategoryIds());
         Product product = productFactory.createProduct(productDto, categories);
@@ -51,7 +51,7 @@ public class ProductController {
         return productFactory.createProductDto(product);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/admin/delete")
     public void deleteProduct(Long id) {
         productService
                 .deleteProduct(id);

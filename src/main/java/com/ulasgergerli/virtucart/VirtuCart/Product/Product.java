@@ -1,6 +1,7 @@
 package com.ulasgergerli.virtucart.VirtuCart.Product;
 
 import com.ulasgergerli.virtucart.VirtuCart.Category.Category;
+import com.ulasgergerli.virtucart.VirtuCart.User.User;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -25,6 +26,9 @@ public class Product {
     @ManyToMany(mappedBy = "products")
     private List<Category> categories;
 
+    @ManyToOne
+    private User user;
+
     public Product() {
     }
 
@@ -38,6 +42,14 @@ public class Product {
 
     public long getId() {
         return id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public void setId(long id) {
