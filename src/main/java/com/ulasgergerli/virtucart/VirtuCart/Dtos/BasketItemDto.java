@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class BasketItemDto {
     private Long id;
     private Long productId;
+    private Long basketId;
     private int quantity;
     private ProductDto product;
 
@@ -31,6 +32,14 @@ public class BasketItemDto {
 
     public int getQuantity() {
         return quantity;
+    }
+
+    public Long getBasketId() {
+        return basketId;
+    }
+
+    public void setBasketId(Long basketId) {
+        this.basketId = basketId;
     }
 
     public void setQuantity(int quantity) {

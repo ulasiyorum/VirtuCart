@@ -1,5 +1,6 @@
 package com.ulasgergerli.virtucart.VirtuCart.Basket;
 
+import com.ulasgergerli.virtucart.VirtuCart.Discount.DiscountService;
 import com.ulasgergerli.virtucart.VirtuCart.Dtos.BasketDto;
 import com.ulasgergerli.virtucart.VirtuCart.Dtos.BasketItemDto;
 import com.ulasgergerli.virtucart.VirtuCart.Factory.BasketFactory;
@@ -7,6 +8,7 @@ import com.ulasgergerli.virtucart.VirtuCart.Product.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,12 +17,15 @@ import java.util.stream.Collectors;
 public class BasketController {
     private final BasketService basketService;
     private final ProductService productService;
+    private final DiscountService discountService;
     private final BasketFactory basketFactory = BasketFactory.getInstance();
 
     public BasketController(BasketService basketService,
-                            ProductService productService) {
+                            ProductService productService,
+                            DiscountService discountService) {
         this.basketService = basketService;
         this.productService = productService;
+        this.discountService = discountService;
     }
 
     @GetMapping("/get")
@@ -52,15 +57,12 @@ public class BasketController {
         if(product == null)
             throw new RuntimeException("Product not found");
 
-        var basket = basketService.getBasket(basketDto.getId());
+        var basket = basketService.getBasket(basketDto.getBasketId());
 
         if(basket == null)
             throw new RuntimeException("Basket not found");
 
-        var basketItem = basketService.addItemToBasket(basketFactory.createBasketItem(basket, product));
-
-        basketItem = basketService.addItemToBasket(basketItem);
-
+        var basketItem = basketService.addOrGetBasketItem(basketFactory.createBasketItem(basket, product));
         return basketFactory.createBasketDto(basketItem.getBasket());
     }
 
@@ -86,6 +88,28 @@ public class BasketController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/getBasketWithDiscount")
+    public BasketDto getBasketWithDiscount(Long basketId, Long discountId) {
+        var basket = basketService.getBasket(basketId);
 
+        if(basket == null)
+            throw new RuntimeException("Basket not found");
+
+        var discount = discountService.getDiscount(discountId);
+
+        if(discount == null)
+            throw new RuntimeException("Discount not found");
+
+        return basketFactory.createBasketDto(basket, discount);
+    }
+
+    @PostMapping("/applyDiscount")
+    public BasketDto applyDiscountToBasket(Long basketId, Long discountId) {
+        var discount = discountService.getDiscount(discountId);
+
+        var basket = basketService.applyDiscountToBasket(basketId, discount);
+
+        return basketFactory.createBasketDto(basket, discount);
+    }
 
 }

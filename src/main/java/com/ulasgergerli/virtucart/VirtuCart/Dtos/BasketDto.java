@@ -16,14 +16,32 @@ public class BasketDto {
     private Long id;
     private Long userId;
     private List<BasketItemDto> basketItems;
+    private DiscountDto discount;
 
+    private double totalPrice;
 
     public Long getUserId() {
         return userId;
     }
 
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public DiscountDto getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(DiscountDto discount) {
+        this.discount = discount;
     }
 
     public List<BasketItemDto> getBasketItems() {
