@@ -106,4 +106,9 @@ public class ProductController {
 
         return productDtos;
     }
+
+    @PostMapping("/subscribe")
+    public void subscribeToProduct(Long userId, Long productId) {
+        productService.subscribeToProduct(userId, productId);
+    }
 }
