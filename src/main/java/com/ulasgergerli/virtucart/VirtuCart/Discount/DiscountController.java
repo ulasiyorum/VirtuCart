@@ -2,10 +2,10 @@ package com.ulasgergerli.virtucart.VirtuCart.Discount;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
-@Controller("/api/v1/discount")
+@RestController
+@RequestMapping("/api/v1/discount")
 public class DiscountController {
 
     private final DiscountService discountService;
@@ -18,5 +18,15 @@ public class DiscountController {
     @GetMapping("/{id}")
     public Discount getDiscount(@PathVariable long id) {
         return discountService.getDiscount(id);
+    }
+
+    @PostMapping("/admin/add")
+    public Discount addDiscount(Discount discount) {
+        return discountService.addDiscount(discount);
+    }
+
+    @DeleteMapping("/admin/delete")
+    public void deleteDiscount(long id) {
+        discountService.deleteDiscount(id);
     }
 }

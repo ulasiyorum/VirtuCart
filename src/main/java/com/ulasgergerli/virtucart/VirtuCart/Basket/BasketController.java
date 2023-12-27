@@ -6,14 +6,13 @@ import com.ulasgergerli.virtucart.VirtuCart.Dtos.BasketItemDto;
 import com.ulasgergerli.virtucart.VirtuCart.Factory.BasketFactory;
 import com.ulasgergerli.virtucart.VirtuCart.Product.ProductService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Controller("/api/v1/basket")
+@RestController
+@RequestMapping("/api/v1/basket")
 public class BasketController {
     private final BasketService basketService;
     private final ProductService productService;
@@ -66,9 +65,14 @@ public class BasketController {
         return basketFactory.createBasketDto(basketItem.getBasket());
     }
 
-    @GetMapping("/deleteBasketItem")
+    @DeleteMapping("/deleteBasketItem")
     public void deleteBasketItem(Long id) {
         basketService.deleteBasketItem(id);
+    }
+
+    @DeleteMapping("/decreaseBasketItemQuantity")
+    public void decreaseBasketItemQuantity(Long id) {
+        basketService.decreaseBasketItemQuantity(id);
     }
 
     @GetMapping("/getBasketItems")

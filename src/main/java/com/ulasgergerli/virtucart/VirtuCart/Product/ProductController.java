@@ -7,15 +7,13 @@ import com.ulasgergerli.virtucart.VirtuCart.Dtos.ProductDto;
 import com.ulasgergerli.virtucart.VirtuCart.Factory.ProductFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller("/api/v1/product")
+@RestController
+@RequestMapping("/api/v1/product")
 public class ProductController {
     private final ProductService productService;
     private final CategoryService categoryService;

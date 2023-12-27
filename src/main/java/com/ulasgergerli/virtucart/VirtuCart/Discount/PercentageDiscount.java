@@ -3,12 +3,11 @@ package com.ulasgergerli.virtucart.VirtuCart.Discount;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-@Component
 public class PercentageDiscount implements DiscountStrategy {
 
     private final double percentage;
 
-    public PercentageDiscount(@Value("${discount.percentage}") double percentage) {
+    public PercentageDiscount(double percentage) {
         this.percentage = percentage;
     }
 

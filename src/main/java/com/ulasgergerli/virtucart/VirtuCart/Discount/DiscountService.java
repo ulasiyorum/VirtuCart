@@ -16,4 +16,13 @@ public class DiscountService {
                 .findById(id)
                 .orElse(null);
     }
+
+    public Discount addDiscount(Discount discount) {
+        return discountRepository
+                .save(discount);
+    }
+
+    public void deleteDiscount(long id) {
+        discountRepository.deleteById(id);
+    }
 }

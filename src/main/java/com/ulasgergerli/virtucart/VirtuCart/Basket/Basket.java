@@ -30,7 +30,7 @@ public class Basket {
 
     private Date createdAt;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "basket", cascade = CascadeType.ALL)
     private List<BasketItem> basketItems;
 
     @ManyToOne

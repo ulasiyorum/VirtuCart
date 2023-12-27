@@ -3,6 +3,7 @@ package com.ulasgergerli.virtucart.VirtuCart.Config;
 import com.ulasgergerli.virtucart.VirtuCart.User.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import java.util.Optional;
 
@@ -16,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @RequiredArgsConstructor
+@ComponentScan(basePackages = "com.ulasgergerli.virtucart.VirtuCart")
 public class AppConfig {
     private final UserRepository userRepository;
 

@@ -1,6 +1,7 @@
 package com.ulasgergerli.virtucart.VirtuCart.Product;
 
 import com.ulasgergerli.virtucart.VirtuCart.Category.Category;
+import com.ulasgergerli.virtucart.VirtuCart.Subscribers.ProductSubscriber;
 import com.ulasgergerli.virtucart.VirtuCart.User.User;
 import jakarta.persistence.*;
 
@@ -29,6 +30,9 @@ public class Product {
     @ManyToOne
     private User user;
 
+    @OneToMany
+    private List<ProductSubscriber> productSubscribers;
+
     public Product() {
     }
 
@@ -38,6 +42,14 @@ public class Product {
         this.images = images;
         this.price = price;
         this.categories = categories;
+    }
+
+    public List<ProductSubscriber> getProductSubscribers() {
+        return productSubscribers;
+    }
+
+    public void setProductSubscribers(List<ProductSubscriber> productSubscribers) {
+        this.productSubscribers = productSubscribers;
     }
 
     public Long getId() {

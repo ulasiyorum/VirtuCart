@@ -77,6 +77,16 @@ public class BasketService {
         basketItemRepository.deleteById(basketItemId);
     }
 
+    public void decreaseBasketItemQuantity(Long basketItemId) {
+        var basketItem = basketItemRepository.findById(basketItemId).orElseThrow();
+        if(basketItem.getQuantity() == 1) {
+            basketItemRepository.deleteById(basketItemId);
+        } else {
+            basketItem.setQuantity(basketItem.getQuantity() - 1);
+            basketItemRepository.save(basketItem);
+        }
+    }
+
     public User getUser(Long userId) {
         return userRepository.findById(userId).orElseThrow();
     }
