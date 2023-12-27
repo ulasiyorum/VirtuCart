@@ -23,11 +23,22 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .authorizeHttpRequests(authorize -> {
-                    authorize.anyRequest().permitAll();
-                })
-                .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .authorizeHttpRequests(authorize -> authorize
+                        .anyRequest().permitAll()
+                )
+//                .authorizeHttpRequests(authorize -> {
+//                    authorize
+//                            .requestMatchers(request -> request
+//                                    .getServletPath().startsWith("/api/v1"))
+//                            .authenticated()
+//                            .requestMatchers(request -> request
+//                                    .getServletPath().startsWith("/auth"))
+//                            .permitAll()
+//                            .anyRequest()
+//                            .permitAll();
+//                })
+//                .authenticationProvider(authenticationProvider)
+//                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 }

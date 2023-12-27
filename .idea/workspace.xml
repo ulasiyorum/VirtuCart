@@ -5,14 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="984a4892-23ca-44d0-b2a6-d4bebc0b5ca0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ulasgergerli/virtucart/VirtuCart/Config/SwaggerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ulasgergerli/virtucart/VirtuCart/Auth/AuthenticationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ulasgergerli/virtucart/VirtuCart/Auth/AuthenticationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ulasgergerli/virtucart/VirtuCart/Category/CategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ulasgergerli/virtucart/VirtuCart/Category/CategoryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ulasgergerli/virtucart/VirtuCart/Config/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ulasgergerli/virtucart/VirtuCart/Config/SecurityConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ulasgergerli/virtucart/VirtuCart/Discount/DiscountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ulasgergerli/virtucart/VirtuCart/Discount/DiscountController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ulasgergerli/virtucart/VirtuCart/Product/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ulasgergerli/virtucart/VirtuCart/Product/ProductController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,7 +159,7 @@
       <workItem from="1703700968033" duration="417000" />
       <workItem from="1703701395036" duration="295000" />
       <workItem from="1703701699811" duration="94000" />
-      <workItem from="1703701858104" duration="585000" />
+      <workItem from="1703701858104" duration="2228000" />
     </task>
     <servers />
   </component>

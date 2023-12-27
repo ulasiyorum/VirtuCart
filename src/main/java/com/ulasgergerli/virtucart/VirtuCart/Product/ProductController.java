@@ -6,6 +6,7 @@ import com.ulasgergerli.virtucart.VirtuCart.Discount.DiscountService;
 import com.ulasgergerli.virtucart.VirtuCart.Dtos.ProductDto;
 import com.ulasgergerli.virtucart.VirtuCart.Factory.ProductFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,9 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @PostMapping("/admin/add")
+    @PostMapping("/add")
+    @Secured("ROLE_ADMIN")
+
     public ProductDto addProduct(ProductDto productDto) {
         List<Category> categories = categoryService.getCategories(productDto.getCategoryIds());
         Product product = productFactory.createProduct(productDto, categories);
@@ -39,6 +42,7 @@ public class ProductController {
     }
 
     @GetMapping("/getAll")
+
     public List<ProductDto> getAllProducts() {
         List<Product> products = productService
                                     .getAllProducts();
@@ -58,7 +62,9 @@ public class ProductController {
         return productDtos;
     }
 
-    @PutMapping("/admin/update")
+    @PutMapping("/update")
+    @Secured("ROLE_ADMIN")
+
     public ProductDto updateProduct(ProductDto productDto) {
         List<Category> categories = categoryService.getCategories(productDto.getCategoryIds());
         Product product = productFactory.createProduct(productDto, categories);
@@ -69,7 +75,9 @@ public class ProductController {
         return productFactory.createProductDto(product);
     }
 
-    @DeleteMapping("/admin/delete")
+    @DeleteMapping("/delete")
+    @Secured("ROLE_ADMIN")
+
     public void deleteProduct(Long id) {
         productService
                 .deleteProduct(id);

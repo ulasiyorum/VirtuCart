@@ -1,6 +1,8 @@
 package com.ulasgergerli.virtucart.VirtuCart.Category;
 
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,19 +17,22 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @PostMapping("/superadmin/add")
+    @PostMapping("/add")
+    @Secured("ROLE_SUPERADMIN")
     public Category addCategory(Category category) {
         return categoryService
                 .addCategory(category);
     }
 
-    @PutMapping("/superadmin/update")
+    @PutMapping("/update")
+    @Secured("ROLE_SUPERADMIN")
     public Category updateCategory(Category category) {
         return categoryService
                 .updateCategory(category);
     }
 
-    @DeleteMapping("/superadmin/delete")
+    @DeleteMapping("/delete")
+    @Secured("ROLE_SUPERADMIN")
     public void deleteCategory(Long id) {
         categoryService
                 .deleteCategory(id);
