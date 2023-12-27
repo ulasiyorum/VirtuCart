@@ -15,19 +15,19 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @PostMapping("/add")
+    @PostMapping("/superadmin/add")
     public Category addCategory(Category category) {
         return categoryService
                 .addCategory(category);
     }
 
-    @PutMapping("/update")
+    @PutMapping("/superadmin/update")
     public Category updateCategory(Category category) {
         return categoryService
                 .updateCategory(category);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/superadmin/delete")
     public void deleteCategory(Long id) {
         categoryService
                 .deleteCategory(id);
