@@ -34,6 +34,11 @@ public class ProductService {
                 .save(product);
     }
 
+    public List<Product> getAllProducts() {
+        return productRepository
+                .findAll();
+    }
+
     public Product updateProduct(Product product) {
 
         var subscribers = productSubscriberRepository.findAllByProductId(product.getId());

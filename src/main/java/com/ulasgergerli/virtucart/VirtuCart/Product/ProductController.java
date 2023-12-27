@@ -38,6 +38,26 @@ public class ProductController {
         return productFactory.createProductDto(product);
     }
 
+    @GetMapping("/getAll")
+    public List<ProductDto> getAllProducts() {
+        List<Product> products = productService
+                                    .getAllProducts();
+
+        List<ProductDto> productDtos = new ArrayList<>();
+        for(Product product : products) {
+            List<Long> categoryIds = new ArrayList<>();
+            for(Category category : product.getCategories()) {
+                categoryIds.add(category.getId());
+            }
+
+            product.setCategories(categoryService.getCategories(categoryIds));
+
+            productDtos.add(productFactory.createProductDto(product));
+        }
+
+        return productDtos;
+    }
+
     @PutMapping("/admin/update")
     public ProductDto updateProduct(ProductDto productDto) {
         List<Category> categories = categoryService.getCategories(productDto.getCategoryIds());
